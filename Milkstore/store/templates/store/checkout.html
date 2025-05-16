@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Checkout - MilkStore{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <h2 class="mb-4 text-center">Checkout</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Your full name" required />
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Shipping Address:</label>
+                <textarea id="address" name="address" rows="4" class="form-control" placeholder="Your shipping address" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Your phone number" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Place Order</button>
+        </form>
+        <a href="{% url 'view_cart' %}" class="btn btn-secondary mt-3 w-100">Back to Cart</a>
+    </div>
+</div>
+{% endblock %}

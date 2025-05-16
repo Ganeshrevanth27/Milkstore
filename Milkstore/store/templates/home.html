@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Home - MilkStore{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Welcome {% if request.user.is_authenticated %}{{ request.user.username }}{% else %}to MilkStore{% endif %}</h2>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    {% for product in products %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;" />
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted flex-grow-1">{{ product.description|truncatechars:80 }}</p>
+                    <p class="card-text fw-bold">₹{{ product.price }}</p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        <form action="{% url 'add_to_cart' product.id %}" method="post" class="me-2">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Add to Cart</button>
+                        </form>
+                        <a href="{% url 'buy_now' product.id %}" class="btn btn-success btn-sm w-100">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center">No products available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

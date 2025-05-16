@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Buy Now - {{ product.name }}{% endblock %}
+
+{% block content %}
+<h2>Buy Now</h2>
+<div class="card mb-4" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text fw-bold">Price: ₹{{ product.price }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="post" class="mb-4" style="max-width: 540px;">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" required />
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Shipping Address:</label>
+        <textarea name="address" id="address" rows="3" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Checkout</button>
+    <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+{% endblock %}
